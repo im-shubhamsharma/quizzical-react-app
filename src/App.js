@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Questions from "./components/Questions.js";
+import { nanoid } from "nanoid";
+import data from "./data";
 
-function App() {
+export default function App() {
+  const [questionAnsArray, setQuestionAnsArray] = useState(
+    newQuestionAnsObjArray(data)
+  );
+
+   //function to convert recived data array into an array of object containing necessary information
+  function newQuestionAnsObjArray(data) {
+    let tempArr = [];
+    for (let i = 0; i < data.length; i++) {
+      tempArr.push({
+        question: data[i].Questions,
+        answer: data[i].Answer,
+        id: nanoid(),
+      });
+    }
+    return tempArr;
+  }
+
+  //converting question answer array into array of elements
+  const questionAnsElements = questionAnsArray.map((ques) => (
+    <Questions 
+      key={ques.id}
+      question={ques.question} 
+      answer={ques.answer} 
+    />
+  ));
+
+  console.log(questionAnsArray);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <div className="question--section">{questionAnsElements}</div>
+      <button className="button">Check Answers</button>
+    </main>
   );
 }
-
-export default App;
