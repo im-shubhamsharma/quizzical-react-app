@@ -1,50 +1,68 @@
 import React, { useState, useEffect } from "react";
-import Questions from "./components/Questions.js";
+import Quiz from "./components/Quiz";
 import { nanoid } from "nanoid";
-import data from "./data";
-import FetchData from "./components/FetchData.js";
 
 export default function App() {
-  const [questionAnsArray, setQuestionAnsArray] = useState(
-    newQuestionAnsObjArray(data)
-  );
+  const [data, setData] = useState([]);
 
-   //function to convert recived data array into an array of object containing necessary information
-  function newQuestionAnsObjArray(data) {
+  // data fetching here--------------------------------------------------
+  useEffect(() => {
+    fetch(`https://opentdb.com/api.php?amount=6&type=multiple`)
+      .then((response) => response.json())
+      .then((actualData) => setData(getDesiredData(actualData.results)));
+  }, []);
+  //----------------------------------------------------------------------
+ 
+  function getDesiredData(data) {
     let tempArr = [];
     for (let i = 0; i < data.length; i++) {
+      let randomNumber = Math.floor(Math.random() * 4);
+      let question = data[i].question;
+      //-------------------------
+      let correctAnswer = data[i].correct_answer;
+      let correctAnswerObj = {
+        value: correctAnswer,
+        isCorrect: true,
+        optionId: nanoid(),
+        isHeld: false,
+      };
+      //-------------------------
+      let optionsArray = data[i].incorrect_answers;
+      let optionsArrayObj = optionsArray.map((value) => ({
+        value: value,
+        isCorrect: false,
+        optionId: nanoid(),
+        isHeld: false,
+      }));
+      //-------------------------
+      optionsArrayObj.splice(randomNumber, 0, correctAnswerObj);
+      //-------------------------
       tempArr.push({
-        question: data[i].Questions,
-        answer: data[i].Answer,
-        correctAnswer: data[i].CorrectAnswer,
-        id: nanoid(),
+        questionId: nanoid(),
+        question: question,
+        options: optionsArrayObj,
+        correctAnswer: correctAnswer,
       });
     }
     return tempArr;
   }
-
-  //converting question answer array into array of elements
-  const questionAnsElements = questionAnsArray.map((ques) => (
-    <Questions 
-      key={ques.id}
-      id={ques.id}
-      question={ques.question} 
-      answer={ques.answer} 
-      correctAnswer={ques.correctAnswer}
-    />
-  ));
-
-   
   
-  
+  //--------------------------------------------------------------------
+  console.log(data);
 
-  // console.log(questionAnsArray);
+  const quizElement = data.map(quiz => (
+     <Quiz 
+        question={quiz.question}
+        options={quiz.options}
+        questionId={quiz.questionId}
+     />
+  ))
 
   return (
     <main>
-      {/* <div className="question--section">{questionAnsElements}</div>
-      <button className="button">Check Answers</button> */}
-      <FetchData />
+      <div className="question--section">{quizElement}</div>
+      <button className="button">Check Answers</button>
+      {/* <FetchData /> */}
     </main>
   );
 }

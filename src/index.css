@@ -6,6 +6,7 @@
 body {
   font-family: "Karla", sans-serif;
   height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,50 +15,52 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 600px;
-  height: 570px;
+  /* min-width: 37.5rem;
+  min-height: 35.625rem; */
   border: 0.794239px solid #dbdef0;
   overflow: hidden;
-  padding-top: 30px;
+  padding: 20px 50px;
 }
 .question--container {
   /* border: 2px solid red; */
-  width: 450px;
+  width: 28rem;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 0.938rem;
+  margin-top: 0.938rem;
 }
 .question--title {
   font-family: "Karla";
   font-style: normal;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1rem;
   color: #293264;
 }
 
 .answer--container {
   display: flex;
-  gap: 15px;
+  gap: 0.938rem;
 }
 .answer--elements {
   list-style: none;
-  min-width: 70px;
-  height: 20px;
+  min-width: 4.375rem;
+  min-height: 1.25rem;
   text-align: center;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
   border: 1px solid #293264;
   border-radius: 8px;
   padding: 2px 8px;
   color: #293264;
   cursor: pointer;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-.answer--selector{
-  background-color: #D6DBF5;
+.answer--selector {
+  background-color: #d6dbf5;
   border: none;
 }
 
@@ -66,16 +69,16 @@ main {
   transform: rotate(-0.05deg);
 }
 .button {
-  width: 120px;
-  height: 35px;
+  width: 7.5rem;
+  height: 2.188rem;
   background: #4d5b9e;
   border: none;
-  border-radius: 10px;
-  margin-top: 20px;
+  border-radius: 0.625rem;
+  margin-top: 1.25rem;
 
   font-family: "Karla", sans-serif;
   font-weight: 600;
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 0.75rem;
+  line-height: 0.875rem;
   color: #f5f7fb;
 }
