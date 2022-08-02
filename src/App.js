@@ -12,7 +12,7 @@ export default function App() {
       .then((actualData) => setData(getDesiredData(actualData.results)));
   }, []);
   //----------------------------------------------------------------------
- 
+
   function getDesiredData(data) {
     let tempArr = [];
     for (let i = 0; i < data.length; i++) {
@@ -46,17 +46,34 @@ export default function App() {
     }
     return tempArr;
   }
-  
+
   //--------------------------------------------------------------------
+  // console.log(data);
+
+  function selectOption(id) {
+    setData((prevData) =>
+      prevData.map((data) => ({
+        ...data,
+        options: data.options.map((option) =>
+          id === option.optionId
+            ? { ...option, isHeld: !option.isHeld }
+            : option
+        ),
+      }))
+    );
+  }
+
   console.log(data);
 
-  const quizElement = data.map(quiz => (
-     <Quiz 
-        question={quiz.question}
-        options={quiz.options}
-        questionId={quiz.questionId}
-     />
-  ))
+  const quizElement = data.map((quiz) => (
+    <Quiz
+      key={quiz.questionId}
+      question={quiz.question}
+      options={quiz.options}
+      questionId={quiz.questionId}
+      selectOption={selectOption}
+    />
+  ));
 
   return (
     <main>
