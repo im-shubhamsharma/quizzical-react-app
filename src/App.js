@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Questions from "./components/Questions.js";
 import { nanoid } from "nanoid";
 import data from "./data";
+import FetchData from "./components/FetchData.js";
 
 export default function App() {
   const [questionAnsArray, setQuestionAnsArray] = useState(
@@ -15,6 +16,7 @@ export default function App() {
       tempArr.push({
         question: data[i].Questions,
         answer: data[i].Answer,
+        correctAnswer: data[i].CorrectAnswer,
         id: nanoid(),
       });
     }
@@ -25,17 +27,24 @@ export default function App() {
   const questionAnsElements = questionAnsArray.map((ques) => (
     <Questions 
       key={ques.id}
+      id={ques.id}
       question={ques.question} 
       answer={ques.answer} 
+      correctAnswer={ques.correctAnswer}
     />
   ));
 
-  console.log(questionAnsArray);
+   
+  
+  
+
+  // console.log(questionAnsArray);
 
   return (
     <main>
-      <div className="question--section">{questionAnsElements}</div>
-      <button className="button">Check Answers</button>
+      {/* <div className="question--section">{questionAnsElements}</div>
+      <button className="button">Check Answers</button> */}
+      <FetchData />
     </main>
   );
 }

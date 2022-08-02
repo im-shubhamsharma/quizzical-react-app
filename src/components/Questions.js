@@ -39,6 +39,11 @@ export default function Questions(props) {
     );
   }
 
+  function checkAnswer(){
+    const correctAnswer = props.correctAnswer;
+    
+  }
+
   return (
     <form className="question--container">
       <h4 className="question--title">{props.question}</h4>
