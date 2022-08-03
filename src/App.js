@@ -47,23 +47,43 @@ export default function App() {
     return tempArr;
   }
 
-  //--------------------------------------------------------------------
-  // console.log(data);
+  //state to store options
+  const [options, setOptions] = useState([]);
 
-  function selectOption(id) {
+  //-----------------------------------------------------------------
+  //function to get option array data
+  // function updateOptions() {
+  //   const tempArr = data.map((value) => value.options);
+  //   setOptions(tempArr);
+  // }
+
+  // useEffect(() => {
+  //   updateOptions();
+  // }, [data]);
+
+  // console.log(options);
+  //-----------------------------------------------------------------
+
+  //below functin is used to select options uniquely as we are also matching question id before selecting an option
+  function selectOption(questionId, optionId) {
     setData((prevData) =>
-      prevData.map((data) => ({
-        ...data,
-        options: data.options.map((option) =>
-          id === option.optionId
-            ? { ...option, isHeld: !option.isHeld }
-            : option
-        ),
-      }))
+      prevData.map((data) =>
+        questionId === data.questionId 
+          ? {
+              ...data,
+              options: data.options.map((option) =>
+              optionId === option.optionId
+                  ? { ...option, isHeld: true }
+                  : { ...option, isHeld: false }
+              ),
+            }
+          : data
+      )
     );
   }
+  // -------------------------------------------------------------------
 
-  console.log(data);
+  
 
   const quizElement = data.map((quiz) => (
     <Quiz

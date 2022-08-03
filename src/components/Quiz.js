@@ -8,11 +8,12 @@ export default function Quiz(props) {
   const optionElements = optionsArr.map(option => (
     <Answer 
         key={option.optionId}
-        id={option.optionId}
+        optionId={option.optionId}
         value={option.value}
         isCorrect={option.isCorrect}
         isHeld={option.isHeld}
         selectOption={props.selectOption}
+        questionId={props.questionId}
     />
   ))
   

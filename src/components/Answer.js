@@ -11,7 +11,7 @@ export default function Answer(props) {
       <p
         className="answer--elements"
         style={styles}
-        onClick={() => props.selectOption(props.id)}
+        onClick={() => props.selectOption(props.questionId, props.optionId)}
       >
         {props.value}
       </p>
