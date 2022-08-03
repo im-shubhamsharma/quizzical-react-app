@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from "react";
 
 export default function Answer(props) {
-  const styles = {
-    backgroundColor: props.isHeld ? "#D6DBF5" : "",
-    border: props.isHeld ? "none" : "",
-  };
+  let styles;
+  if (props.quizStatus === "ongoing") {
+    styles = {
+      backgroundColor: props.isHeld ? "#D6DBF5" : "",
+      border: props.isHeld ? "none" : "",
+    };
+  } else if (props.quizStatus === "play again") {
+    if (props.isHeld && props.isCorrect) {
+      styles = {
+        backgroundColor: "#94D7A2",
+        border: "none",
+      };
+    } else if (props.isHeld && !props.isCorrect) {
+      styles = {
+        backgroundColor: "#F8BCBC",
+        border: "none",
+      };
+    } else if (props.isCorrect){
+      styles = {
+        backgroundColor: "#94D7A2",
+        border: "none",
+      };
+    }
+  }
 
   return (
     <>
