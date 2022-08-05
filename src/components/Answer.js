@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+const he = require("he");
 
 export default function Answer(props) {
   let styles;
@@ -26,6 +27,8 @@ export default function Answer(props) {
     }
   }
 
+  // console.log("answer component is running");
+
   return (
     <>
       <p
@@ -33,7 +36,7 @@ export default function Answer(props) {
         style={styles}
         onClick={() => props.selectOption(props.questionId, props.optionId)}
       >
-        {props.value}
+        {he.decode(props.value)}
       </p>
     </>
   );

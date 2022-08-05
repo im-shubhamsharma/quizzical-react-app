@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Answer from "./Answer";
-import Button from "./Button";
+const he = require("he");
 
 export default function Quiz(props) {
   const optionsArr = props.options;
@@ -18,10 +18,12 @@ export default function Quiz(props) {
     />
   ));
 
+  // console.log("quiz component is running");
+
   return (
     <div>
       <form className="question--container">
-        <h4 className="question--title">{props.question}</h4>
+        <h4 className="question--title">{he.decode(props.question)}</h4>
         <div className="answer--container">{optionElements}</div>
         <hr className="separator" />
       </form>

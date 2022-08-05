@@ -2,6 +2,7 @@ import React from "react";
 import Button from "./Button";
 
 export default function StartPage(props) {
+  // console.log("startpage component is running");
   return (
     <div className="startpage">
       <h1 className="title">Quizzical</h1>
