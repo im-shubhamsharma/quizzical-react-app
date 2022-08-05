@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Answer from "./Answer";
+import Button from "./Button";
 
 export default function Quiz(props) {
   const optionsArr = props.options;
@@ -18,10 +19,12 @@ export default function Quiz(props) {
   ));
 
   return (
-    <form className="question--container">
-      <h4 className="question--title">{props.question}</h4>
-      <div className="answer--container">{optionElements}</div>
-      <hr className="separator" />
-    </form>
+    <div>
+      <form className="question--container">
+        <h4 className="question--title">{props.question}</h4>
+        <div className="answer--container">{optionElements}</div>
+        <hr className="separator" />
+      </form>
+    </div>
   );
 }

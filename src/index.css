@@ -5,29 +5,31 @@
 }
 body {
   font-family: "Karla", sans-serif;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+  /* padding: 20px; */
 }
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* min-width: 37.5rem;
-  min-height: 35.625rem; */
+  justify-content: center;
+  /* overflow: hidden; */
+  max-width: 550px;
+  min-height: 550px;
+  margin: auto;
   border: 0.794239px solid #dbdef0;
-  overflow: hidden;
-  padding: 20px 50px;
+  margin-top: 100px;
+  padding: 30px 50px;
 }
-.startpage{
+.startpage {
+  /* border: 2px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 12px;
-  margin-bottom: 10px;
 }
 .title {
   font-weight: 700;
@@ -44,12 +46,8 @@ main {
 }
 
 .question--container {
-  /* border: 2px solid red; */
-  width: 28rem;
-  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   gap: 0.938rem;
   margin-top: 0.938rem;
 }
@@ -117,4 +115,35 @@ main {
   font-weight: 700;
   font-size: 0.95rem;
   color: #293264;
+}
+
+.loading--overlay{
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 100;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.loading--overlay h1{
+  align-self: center;
+}
+
+/* -------------------------------------------------
+Making webiste responsive */
+@media screen and (max-width: 500px) {
+  main {
+    /* height: 80vh; */
+    margin-top: 0px;
+    padding: 20px 20px;
+    border: none;
+  }
+  .startpage{
+    margin-top: 80%;
+  }
+  .answer--container {
+    flex-direction: column;
+  }
 }

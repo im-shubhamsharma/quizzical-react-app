@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Quiz from "./components/Quiz";
 import StartPage from "./components/StartPage";
+import Button from "./components/Button";
+import Loading from "./components/Loading";
 import { nanoid } from "nanoid";
 
 export default function App() {
   // -------------------------------------------------------------------
   const [quizStatus, setQuizStatus] = useState("start");
+
   function quizStausToggle() {
     setQuizStatus((prevState) => {
       if (prevState === "start") return "ongoing";
@@ -13,15 +16,31 @@ export default function App() {
       if (prevState === "play again") return "ongoing";
     });
   }
+
   // -------------------------------------------------------------------
-  // Data Fetch Request to API 
-  const [data, setData] = useState([]);
+  // Data Fetch Request to API
+  const [quizData, setQuizData] = useState({
+    data: [],
+    loading: false,
+  });
 
   useEffect(() => {
-    if (quizStatus == "ongoing") {
-      fetch(`https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple`)
+    if (quizStatus === "ongoing") {
+      setQuizData((prevData) => ({
+        ...prevData,
+        loading: true,
+      }));
+
+      fetch(
+        `https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple`
+      )
         .then((response) => response.json())
-        .then((actualData) => setData(getDesiredData(actualData.results)));
+        .then((actualData) =>
+          setQuizData({
+            data: getDesiredData(actualData.results),
+            loading: false,
+          })
+        );
     }
   }, [quizStatus]);
 
@@ -64,8 +83,9 @@ export default function App() {
 
   //below functin is used to select options uniquely as we are also matching question id before selecting an option
   function selectOption(questionId, optionId) {
-    setData((prevData) =>
-      prevData.map((data) =>
+    setQuizData((prevData) => ({
+      ...prevData,
+      data: prevData.data.map((data) =>
         questionId === data.questionId
           ? {
               ...data,
@@ -76,10 +96,9 @@ export default function App() {
               ),
             }
           : data
-      )
-    );
+      ),
+    }));
   }
-
 
   // -------------------------------------------------------------------
   const [correctCount, setCorrectCount] = useState(0);
@@ -104,7 +123,7 @@ export default function App() {
     quizStausToggle();
   }
 
-  const quizElement = data.map((quiz) => (
+  const quizElement = quizData.data.map((quiz) => (
     <Quiz
       key={quiz.questionId}
       question={quiz.question}
@@ -115,13 +134,15 @@ export default function App() {
     />
   ));
 
-  console.log(data);
+  console.log(quizData.data);
 
   return (
     <main>
+      {quizData.loading && <Loading />}
+
       {quizStatus === "start" && <StartPage />}
 
-      {(quizStatus === "ongoing" || quizStatus === "play again") && (
+      {quizData.loading === false && (quizStatus === "ongoing" || quizStatus === "play again") && (
         <div className="question--section">{quizElement}</div>
       )}
 
@@ -129,20 +150,9 @@ export default function App() {
         {quizStatus === "play again" && (
           <p className="result">{`You scored ${correctCount}/5 correct answers`}</p>
         )}
-        {quizStatus === "ongoing" && (
-          <button className="button" onClick={() => checkAnswers(data)}>
-            Check Answers
-          </button>
-        )}
-        {(quizStatus === "start" || quizStatus === "play again") && (
-          <button className="button" onClick={() => quizStausToggle()}>
-            {" "}
-            {quizStatus === "start" ? "Start Quiz" : "Play Again"}
-          </button>
-        )}
-      </div>
 
-      {/* <FetchData /> */}
+        <Button quizStatus={quizStatus} handleChange={quizStausToggle} />
+      </div>
     </main>
   );
 }
