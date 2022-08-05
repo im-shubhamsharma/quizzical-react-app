@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
 import Quiz from "./components/Quiz";
 import StartPage from "./components/StartPage";
 import Button from "./components/Button";
 import Loading from "./components/Loading";
 import { nanoid } from "nanoid";
+import Confetti from "./components/Confetti";
 
 export default function App() {
   // -------------------------------------------------------------------
@@ -102,7 +104,7 @@ export default function App() {
 
   // -------------------------------------------------------------------
   // function to check correct answers
-  const [correctCount, setCorrectCount] = useState(0)
+  const [correctCount, setCorrectCount] = useState(0);
 
   function checkAnswers() {
     let count = 0;
@@ -131,32 +133,38 @@ export default function App() {
     />
   ));
 
-  // console.log("app component is running");
+  console.log(quizData.data);
 
   return (
-    <main>
-      {quizData.loading && <Loading />}
-      {/* <Loading /> */}
+    <div>
+      <Header />
 
-      {quizStatus === "start" && <StartPage />}
+      {correctCount === 5 && <Confetti />}
 
-      {quizData.loading === false &&
-        (quizStatus === "ongoing" || quizStatus === "play again") && (
-          <div className="question--section">{quizElement}</div>
-        )}
+      <main>
+        {quizData.loading && <Loading />}
+        {/* <Loading /> */}
 
-      <div className="button--result">
-        {quizStatus === "play again" && (
-          <p className="result">{`You scored ${correctCount}/5 correct answers`}</p>
-        )}
+        {quizStatus === "start" && <StartPage />}
 
-        <Button
-          quizStatus={quizStatus}
-          handleChange={
-            quizStatus === "ongoing" ? checkAnswers : quizStausToggle
-          }
-        />
-      </div>
-    </main>
+        {quizData.loading === false &&
+          (quizStatus === "ongoing" || quizStatus === "play again") && (
+            <div className="question--section">{quizElement}</div>
+          )}
+
+        <div className="button--result">
+          {quizStatus === "play again" && (
+            <p className="result">{`You scored ${correctCount}/5 correct answers`}</p>
+          )}
+
+          <Button
+            quizStatus={quizStatus}
+            handleChange={
+              quizStatus === "ongoing" ? checkAnswers : quizStausToggle
+            }
+          />
+        </div>
+      </main>
+    </div>
   );
 }

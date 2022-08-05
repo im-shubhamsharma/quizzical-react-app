@@ -27,8 +27,6 @@ export default function Answer(props) {
     }
   }
 
-  // console.log("answer component is running");
-
   return (
     <>
       <p

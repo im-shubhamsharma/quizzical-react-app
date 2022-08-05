@@ -17,9 +17,6 @@ export default function Quiz(props) {
       quizStatus={props.quizStatus}
     />
   ));
-
-  // console.log("quiz component is running");
-
   return (
     <div>
       <form className="question--container">
